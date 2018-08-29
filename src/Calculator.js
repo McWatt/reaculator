@@ -2,22 +2,37 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 
 const Container = styled.div`
-    padding: 8em;
-    font-size: 32px;
-    display: grid;
+  padding: 8em;
+  font-size: 32px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  > button:nth-child(15) {
+    grid-column: 2 / 4;
+  }
 `;
 
-const Screen = styled.button`
+const Screen = styled.div`
   background-color: darkgrey;
   color: white;
   font-size: 1.25em;
-  grid-row: 1;
+  grid-column: 1 / -1;
+  text-align: center;
 `;
 
 const Button = styled.button`
     background-color: lightblue;
-    color: darkgrey;
+    color: #777;
     font-size: 1em;
+    outline: 0;
+    border: 1px solid lightgrey;
+
+    &:active {
+      background-color: darkgrey;
+      color: white;
+    }
+
+
 `;
 
 const operators = {
@@ -101,21 +116,21 @@ class Calculator extends Component {
     return (
       <Container>
             <Screen>{this.state.currentValue}</Screen>
-            <Button onClick={this.handleClear}>clear</Button>
             <Button onClick={this.handleNumberSetting}>7</Button>
             <Button onClick={this.handleNumberSetting}>8</Button>
             <Button onClick={this.handleNumberSetting}>9</Button>
+            <Button operator='/' onClick={this.handleOperatorChange}>/</Button>
             <Button onClick={this.handleNumberSetting}>4</Button>
             <Button onClick={this.handleNumberSetting}>5</Button>
             <Button onClick={this.handleNumberSetting}>6</Button>
+            <Button operator='*' onClick={this.handleOperatorChange}>*</Button>
             <Button onClick={this.handleNumberSetting}>1</Button>
             <Button onClick={this.handleNumberSetting}>2</Button>
             <Button onClick={this.handleNumberSetting}>3</Button>
             <Button operator='+' onClick={this.handleOperatorChange}>+</Button>
-            <Button operator='-' onClick={this.handleOperatorChange}>-</Button>
-            <Button operator='*' onClick={this.handleOperatorChange}>*</Button>
-            <Button operator='/' onClick={this.handleOperatorChange}>/</Button>
+            <Button danger onClick={this.handleClear}>clear</Button>
             <Button onClick={this.handleCalculationRequest}>=</Button>
+            <Button operator='-' onClick={this.handleOperatorChange}>-</Button>
       </Container>
     );
   }
