@@ -5,7 +5,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Calculator />
+        <Calculator
+          operatorTheme='lightgrey'
+          operationTheme='lightpink' />
       </div>
     );
   }
