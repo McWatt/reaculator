@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import styled, { css } from 'styled-components';
 
 const Container = styled.div`
-  font-size: 32px;
+  font-size: 2.5rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 10vw);
+  grid-template-rows: repeat(5, 10vw);
+  justify-content: center;
 `;
 
 const Screen = styled.div`
@@ -12,7 +14,11 @@ const Screen = styled.div`
   color: white;
   font-size: 1.25em;
   grid-column: 1 / -1;
-  text-align: center;
+  text-align: right;
+  line-height: 2;
+  padding-left: .5em;
+  padding-right: .5em;
+  word-wrap: break-word;
 `;
 
 const Button = styled.button`
@@ -61,6 +67,7 @@ class Calculator extends Component {
     this.state = {
       currentValue: 0,
       previousValue: 0,
+      newConstant: true,
       operator: '',
     };
 
@@ -75,14 +82,16 @@ class Calculator extends Component {
       console.log(event.target.getAttribute("operator"));
 
     this.setState({
-        operator: event.target.getAttribute("operator")
+      operator: event.target.getAttribute("operator"),
+      newConstant: true,
     });
   }
 
     handleCalculationRequest(event) {
     this.setState({
       currentValue: this.calculateNumbers(),
-      operator: ""
+      operator: '',
+      newConstant: true,
     });
   }
 
@@ -93,13 +102,14 @@ class Calculator extends Component {
   appendNumberToCurrentValue(num) {
     this.setState({
       currentValue: Number(this.state.currentValue + '' + num),
+      newConstant: false,
     })
   }
 
   handleNumberSetting(event) {
       const num = Number(event.target.innerText);
 
-      if (this.state.operator !== '') {
+      if (this.state.newConstant) {
           this.setState({
               previousValue: this.state.currentValue,
               currentValue: '',
@@ -118,6 +128,7 @@ class Calculator extends Component {
           currentValue: 0,
           operator: '',
           previousValue: 0,
+          newConstant: true,
       });
   }
 
@@ -154,6 +165,7 @@ class Calculator extends Component {
               backgroundColor={this.props.operationTheme}
               onClick={this.handleClear}>clear</Button>
             <Button
+              disabled={this.state.newConstant}
               backgroundColor={this.props.operationTheme}
               onClick={this.handleCalculationRequest}>=</Button>
             <Button
