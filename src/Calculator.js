@@ -1,64 +1,8 @@
 import React, { Component } from "react";
-import styled, { css } from 'styled-components';
-
-const Container = styled.div`
-  font-size: 2.5rem;
-  display: grid;
-  grid-template-columns: repeat(4, 10vw);
-  grid-template-rows: repeat(5, 10vw);
-  justify-content: center;
-`;
-
-const Screen = styled.div`
-  background-color: darkslategrey;
-  color: white;
-  font-size: 1.25em;
-  grid-column: 1 / -1;
-  text-align: right;
-  line-height: 2;
-  padding-left: .5em;
-  padding-right: .5em;
-  word-wrap: break-word;
-`;
-
-const Button = styled.button`
-  background-color: lightblue;
-  color: #777;
-  font-size: 1em;
-  outline: 0;
-  border: 1px solid white;
-
-  &:active {
-    background-color: darkgrey;
-    color: white;
-  }
-
-  ${props =>
-    props.backgroundColor &&
-    css`
-      background-color: ${props.backgroundColor};
-    `};
-
-  ${props =>
-    props.chosen &&
-    css`
-      background-color: lightskyblue;
-    `};
-
-  ${props =>
-    props.disabled &&
-    css`
-      color: lightgrey;
-      font-style: italic;
-    `};
-`;
-
-const operations = {
-    '+': (a, b) => a + b,
-    '-': (a, b) => a - b,
-    '*': (a, b) => a * b,
-    '/': (a, b) => a / b,
-}
+import operations from './operatorFunctions';
+import Button from './components/Button';
+import Screen from './components/Screen';
+import CalculatorContainer from './components/CalculatorContainer';
 
 class Calculator extends Component {
   constructor(props) {
@@ -134,7 +78,7 @@ class Calculator extends Component {
 
   render() {
     return (
-      <Container>
+      <CalculatorContainer>
             <Screen>{this.state.currentValue}</Screen>
             <Button onClick={this.handleNumberSetting}>7</Button>
             <Button onClick={this.handleNumberSetting}>8</Button>
@@ -173,7 +117,7 @@ class Calculator extends Component {
               backgroundColor={this.props.operatorTheme}
               chosen={this.state.operator === '-'}
               onClick={this.handleOperatorChange}>-</Button>
-      </Container>
+      </CalculatorContainer>
     );
   }
 }
