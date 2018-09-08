@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Button from './Button';
-
-import { render } from 'react-testing-library'
+import { render } from 'react-testing-library';
 
 it('Button renders without crashing', () => {
     const div = document.createElement('div');
