@@ -111,6 +111,10 @@ class Calculator extends Component {
     if (event.key === 'Enter' && this.isCalcuable()) {
       this.performCalculation();
     }
+
+    if (event.key === 'Escape') {
+      this.handleClear();
+  }
   }
 
   componentDidMount() {
