@@ -69,7 +69,7 @@ class Calculator extends Component {
   }
 
   handleOperatorChange(event) {
-    this.setOperator(event.target.getAttribute("operator"));
+    this.setOperator(event.target.value);
   }
 
   handleCalculationRequest(event) {
@@ -77,7 +77,7 @@ class Calculator extends Component {
   }
 
   handleNumberChange(event) {
-    this.setNumber(Number(event.target.innerText));
+    this.setNumber(Number(event.target.value));
   }
 
   handleClear(event) {
@@ -98,6 +98,7 @@ class Calculator extends Component {
   }
 
   handleKeypress(event){
+
     if (!isNaN(event.key)) {
       this.setNumber(event.key);
       return;
@@ -114,7 +115,7 @@ class Calculator extends Component {
 
     if (event.key === 'Escape') {
       this.handleClear();
-  }
+    }
   }
 
   componentDidMount() {
@@ -126,42 +127,44 @@ class Calculator extends Component {
 
   render() {
     return (
-      <CalculatorContainer>
-            <Screen>{this.state.currentValue}</Screen>
-            <Button onClick={this.handleNumberChange}>7</Button>
-            <Button onClick={this.handleNumberChange}>8</Button>
-            <Button onClick={this.handleNumberChange}>9</Button>
+      <CalculatorContainer role="grid">
+            <Screen data-type="screen">{this.state.currentValue}</Screen>
+            <Button value="7" onClick={this.handleNumberChange}>7</Button>
+            <Button value="8" onClick={this.handleNumberChange}>8</Button>
+            <Button value="9" onClick={this.handleNumberChange}>9</Button>
             <Button
-              operator='/'
+              value='/'
               backgroundColor={this.props.operatorTheme}
               chosen={this.state.operator === '/'}
               onClick={this.handleOperatorChange}>/</Button>
-            <Button onClick={this.handleNumberChange}>4</Button>
-            <Button onClick={this.handleNumberChange}>5</Button>
-            <Button onClick={this.handleNumberChange}>6</Button>
+            <Button value="4" onClick={this.handleNumberChange}>4</Button>
+            <Button value="5" onClick={this.handleNumberChange}>5</Button>
+            <Button value="6" onClick={this.handleNumberChange}>6</Button>
             <Button
-              operator='*'
+              value='*'
               backgroundColor={this.props.operatorTheme}
               chosen={this.state.operator === '*'}
               onClick={this.handleOperatorChange}>*</Button>
-            <Button onClick={this.handleNumberChange}>1</Button>
-            <Button onClick={this.handleNumberChange}>2</Button>
-            <Button onClick={this.handleNumberChange}>3</Button>
+            <Button value="1" onClick={this.handleNumberChange}>1</Button>
+            <Button value="2" onClick={this.handleNumberChange}>2</Button>
+            <Button value="3" onClick={this.handleNumberChange}>3</Button>
             <Button
-              operator='+'
+              value='+'
               backgroundColor={this.props.operatorTheme}
               chosen={this.state.operator === '+'}
               onClick={this.handleOperatorChange}>+</Button>
             <Button onClick={this.handleNumberChange}>0</Button>
             <Button
+              value="clear"
               backgroundColor={this.props.operationTheme}
               onClick={this.handleClear}>clear</Button>
             <Button
+              value='='
               disabled={this.state.newConstant}
               backgroundColor={this.props.operationTheme}
               onClick={this.handleCalculationRequest}>=</Button>
             <Button
-              operator='-'
+              value='-'
               backgroundColor={this.props.operatorTheme}
               chosen={this.state.operator === '-'}
               onClick={this.handleOperatorChange}>-</Button>
