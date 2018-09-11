@@ -120,6 +120,12 @@ class Calculator extends Component {
 
     if (event.key === 'Enter' && this.isCalcuable()) {
       this.performCalculation();
+      return;
+    }
+
+    if (event.key === '.') {
+      this.setDecimal();
+      return;
     }
 
     if (event.key === 'Escape') {
