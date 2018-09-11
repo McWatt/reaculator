@@ -9,14 +9,15 @@ class Calculator extends Component {
     super(props);
 
     this.state = {
-      currentValue: 0,
-      previousValue: 0,
+      currentValue: '0',
+      previousValue: '0',
       newConstant: true,
       operator: '',
     };
 
     this.setOperator = this.setOperator.bind(this);
     this.handleOperatorChange = this.handleOperatorChange.bind(this);
+    this.setDecimal = this.setDecimal.bind(this);
     this.setNumber = this.setNumber.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
     this.performCalculation = this.performCalculation.bind(this);
@@ -25,6 +26,13 @@ class Calculator extends Component {
     this.isCalcuable = this.isCalcuable.bind(this);
     this.appendNumberToCurrentValue = this.appendNumberToCurrentValue.bind(this);
     this.handleKeypress = this.handleKeypress.bind(this);
+  }
+
+  setDecimal() {
+    // also check if a new constant because the currentValue has not yet been moved to previousValue
+    if (!this.state.currentValue.includes('.') || this.state.newConstant) {
+      this.setNumber('.');
+    }
   }
 
   setNumber(num) {
@@ -46,6 +54,7 @@ class Calculator extends Component {
     this.setState({
       operator: operator,
       newConstant: true,
+      currentValue: Number(this.state.currentValue).toString(),
     });
   }
 
@@ -58,12 +67,12 @@ class Calculator extends Component {
   }
 
   calculateNumbers() {
-      return operations[this.state.operator](this.state.previousValue, this.state.currentValue);
+      return operations[this.state.operator](Number(this.state.previousValue), Number(this.state.currentValue));
   }
 
   appendNumberToCurrentValue(num) {
     this.setState({
-      currentValue: Number(this.state.currentValue + '' + num),
+      currentValue: this.state.currentValue + '' + num,
       newConstant: false,
     })
   }
@@ -77,14 +86,14 @@ class Calculator extends Component {
   }
 
   handleNumberChange(event) {
-    this.setNumber(Number(event.target.value));
+    this.setNumber(event.target.value);
   }
 
   handleClear(event) {
       this.setState({
-          currentValue: 0,
+          currentValue: '0',
           operator: '',
-          previousValue: 0,
+          previousValue: '0',
           newConstant: true,
       });
   }
@@ -153,21 +162,26 @@ class Calculator extends Component {
               backgroundColor={this.props.operatorTheme}
               chosen={this.state.operator === '+'}
               onClick={this.handleOperatorChange}>+</Button>
-            <Button onClick={this.handleNumberChange}>0</Button>
             <Button
-              value="clear"
-              backgroundColor={this.props.operationTheme}
-              onClick={this.handleClear}>clear</Button>
+              value="0"
+              onClick={this.handleNumberChange}>0</Button>
+              <Button
+                value='.'
+                onClick={this.setDecimal}>.</Button>
             <Button
               value='='
               disabled={this.state.newConstant}
-              backgroundColor={this.props.operationTheme}
+              backgroundColor={this.props.equalsTheme}
               onClick={this.handleCalculationRequest}>=</Button>
             <Button
               value='-'
               backgroundColor={this.props.operatorTheme}
               chosen={this.state.operator === '-'}
               onClick={this.handleOperatorChange}>-</Button>
+            <Button
+              value="clear"
+              backgroundColor={this.props.operationTheme}
+              onClick={this.handleClear}>clear</Button>
       </CalculatorContainer>
     );
   }

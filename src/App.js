@@ -7,7 +7,8 @@ class App extends Component {
       <div>
         <Calculator
           operatorTheme='lightgrey'
-          operationTheme='lightpink' />
+          operationTheme='lightpink'
+          equalsTheme="lightgreen" />
       </div>
     );
   }
