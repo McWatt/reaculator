@@ -357,3 +357,27 @@ test("Decimal numbers have proper formatting", () => {
     fireEvent.click(button7);
     expect(screen.innerHTML).toEqual("3.707");
 });
+
+test("Equals button should be disabled if not usable", () => {
+    const { container } = render(
+        <Calculator
+            operatorTheme='lightgrey'
+            operationTheme='lightpink' />
+    );
+
+    const calculator = container.querySelector('[role="grid"]');
+    const equals = calculator.querySelector('button[value="="]');
+    const button3 = calculator.querySelector('button[value="3"]');
+    const addition = calculator.querySelector('button[value="+"]');
+
+    expect(equals.disabled).toEqual(true);
+
+    fireEvent.click(button3);
+    expect(equals.disabled).toEqual(true);
+    
+    fireEvent.click(addition);
+    expect(equals.disabled).toEqual(true);
+
+    fireEvent.click(button3);
+    expect(equals.disabled).toEqual(false);
+});

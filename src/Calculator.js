@@ -10,7 +10,7 @@ class Calculator extends Component {
 
     this.state = {
       currentValue: '0',
-      previousValue: '0',
+      previousValue: '',
       newConstant: true,
       operator: '',
     };
@@ -93,7 +93,7 @@ class Calculator extends Component {
       this.setState({
           currentValue: '0',
           operator: '',
-          previousValue: '0',
+          previousValue: '',
           newConstant: true,
       });
   }
@@ -103,7 +103,11 @@ class Calculator extends Component {
   }
 
   isCalcuable() {
-    return this.isOperator(this.state.operator);
+    const hasOperator = !!this.state.operator;
+    const hasCurrentValue = !!this.state.currentValue || this.state.currentValue === '0';
+    const hasPreviousValue = !!this.state.previousValue || this.state.previousValue === '0';
+    
+    return hasOperator && hasCurrentValue && hasPreviousValue && !this.state.newConstant;
   }
 
   handleKeypress(event){
@@ -176,7 +180,7 @@ class Calculator extends Component {
                 onClick={this.setDecimal}>.</Button>
             <Button
               value='='
-              disabled={this.state.newConstant}
+              disabled={!this.isCalcuable()}
               backgroundColor={this.props.equalsTheme}
               onClick={this.handleCalculationRequest}>=</Button>
             <Button
